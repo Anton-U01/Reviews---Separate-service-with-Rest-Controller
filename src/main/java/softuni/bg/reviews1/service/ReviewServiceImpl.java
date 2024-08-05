@@ -37,9 +37,9 @@ public class ReviewServiceImpl implements ReviewService{
         review.setContent(addReviewDto.getContent());
         review.setCreatedOn(LocalDateTime.now());
         User author = userRepository.findByUsername(addReviewDto.getAuthorUsername())
-                .orElseThrow(()-> new UserNotFoundException("User with username " + addReviewDto.getAuthorUsername() + " not found"));
+                .orElseThrow(()-> new UserNotFoundException("User with username " + addReviewDto.getAuthorUsername() + " is not found!"));
         Product product = productRepository.findById(addReviewDto.getProduct())
-                .orElseThrow(()-> new ProductNotFoundException("Product with id " + addReviewDto.getProduct() + " not found"));
+                .orElseThrow(()-> new ProductNotFoundException("Product with id " + addReviewDto.getProduct() + " is not found!"));
         review.setAuthor(author);
         review.setProduct(product);
 
@@ -50,7 +50,7 @@ public class ReviewServiceImpl implements ReviewService{
     @Transactional
     public List<ViewReviewDto> getAllReviews(Long productId) {
         Product product = productRepository.findById(productId)
-                .orElseThrow(()-> new ProductNotFoundException("Product with id " + productId + " not found"));
+                .orElseThrow(()-> new ProductNotFoundException("Product with id " + productId + " is not found!"));
 
         List<ViewReviewDto> allReviews = product.getReviews().stream().map(r -> {
 
